@@ -1,160 +1,1957 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TUSU — Moda Y2K</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-    <script src="script.js" defer></script>
+    <title>NeuroAtlas — Inteligencia Aplicada</title>
+    <meta name="description" content="NeuroAtlas, hub de conocimiento multitemático con playground IA, mapa relacional y dashboard interactivo sin dependencias externas.">
+    <style>
+        :root {
+            color-scheme: dark;
+            --bg-primary: radial-gradient(circle at 20% 20%, rgba(73, 36, 174, 0.55), transparent 60%), radial-gradient(circle at 80% 10%, rgba(6, 189, 252, 0.35), transparent 55%), #050510;
+            --bg-secondary: rgba(18, 20, 42, 0.75);
+            --bg-elevated: rgba(32, 35, 70, 0.75);
+            --text-primary: #f4f7ff;
+            --text-secondary: #c3c8ff;
+            --accent-cyan: #3af2ff;
+            --accent-magenta: #ff5cf1;
+            --accent-lime: #9dff76;
+            --accent-blue: #5d7bff;
+            --shadow-strong: 0 20px 40px rgba(0, 0, 0, 0.35);
+            --blur-level: 18px;
+            --transition-base: 200ms ease;
+            --header-height: 78px;
+        }
+
+        [data-theme="light"] {
+            color-scheme: light;
+            --bg-primary: radial-gradient(circle at 10% 10%, rgba(255, 95, 211, 0.14), transparent 45%), radial-gradient(circle at 90% 20%, rgba(0, 141, 255, 0.18), transparent 50%), #f6f8ff;
+            --bg-secondary: rgba(255, 255, 255, 0.85);
+            --bg-elevated: rgba(255, 255, 255, 0.75);
+            --text-primary: #171a3f;
+            --text-secondary: #31345a;
+            --shadow-strong: 0 14px 32px rgba(45, 65, 120, 0.18);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            transition: background 0.6s ease, color 0.6s ease;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin: 0 0 0.4em;
+        }
+
+        p {
+            line-height: 1.6;
+            margin: 0 0 1em;
+        }
+
+        ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        button, input, select, textarea {
+            font-family: inherit;
+        }
+
+        .visually-hidden {
+            position: absolute !important;
+            height: 1px;
+            width: 1px;
+            overflow: hidden;
+            clip: rect(1px, 1px, 1px, 1px);
+            white-space: nowrap;
+        }
+
+        .layout {
+            position: relative;
+            padding-top: var(--header-height);
+        }
+
+        header {
+            position: fixed;
+            inset: 0 0 auto;
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2.5rem;
+            backdrop-filter: blur(var(--blur-level));
+            background: linear-gradient(90deg, rgba(5, 5, 16, 0.75), rgba(16, 18, 41, 0.75));
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 1000;
+            transition: background 0.5s ease;
+        }
+
+        [data-theme="light"] header {
+            background: linear-gradient(90deg, rgba(246, 248, 255, 0.9), rgba(236, 241, 255, 0.85));
+            border-bottom-color: rgba(18, 18, 56, 0.08);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .brand span {
+            display: inline-flex;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-magenta), var(--accent-blue));
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #050510;
+            box-shadow: 0 0 18px rgba(255, 92, 241, 0.45);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        nav a {
+            position: relative;
+            text-decoration: none;
+            font-size: 0.92rem;
+            padding: 0.4rem 0.75rem;
+            border-radius: 999px;
+            transition: color var(--transition-base), background var(--transition-base), box-shadow var(--transition-base);
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            inset: auto 15% -6px 15%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-magenta), var(--accent-cyan));
+            opacity: 0;
+            transform: scaleX(0.6);
+            transition: opacity var(--transition-base), transform var(--transition-base);
+        }
+
+        nav a:hover,
+        nav a:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--accent-cyan);
+        }
+
+        nav a.active {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 24px rgba(58, 242, 255, 0.25);
+        }
+
+        nav a.active::after {
+            opacity: 1;
+            transform: scaleX(1);
+        }
+
+        .theme-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 0.95rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(15, 17, 35, 0.65);
+            cursor: pointer;
+            transition: transform var(--transition-base), background var(--transition-base);
+        }
+
+        .theme-toggle span {
+            font-size: 0.9rem;
+        }
+
+        .theme-toggle:focus-visible {
+            outline: 2px solid var(--accent-cyan);
+            outline-offset: 3px;
+        }
+
+        [data-theme="light"] .theme-toggle {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(28, 30, 60, 0.16);
+        }
+
+        .section {
+            position: relative;
+            padding: 6rem 0;
+        }
+
+        .section.alt {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .section-inner {
+            width: min(1120px, 92vw);
+            margin: 0 auto;
+        }
+
+        .section-header {
+            max-width: 720px;
+            margin-bottom: 2.6rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2.4rem, 4vw, 3.2rem);
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+        }
+
+        .hero {
+            position: relative;
+            min-height: calc(100vh - var(--header-height));
+            display: grid;
+            align-items: center;
+            padding: 6rem 0 6rem;
+        }
+
+        .hero-content {
+            width: min(1000px, 90vw);
+            margin: 0 auto;
+            display: grid;
+            gap: 2rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 6vw, 4.6rem);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            max-width: 560px;
+            color: var(--text-secondary);
+        }
+
+        .cta-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.85rem 1.6rem;
+            font-weight: 600;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
+            background: linear-gradient(135deg, var(--accent-magenta), var(--accent-blue));
+            color: #02010d;
+            box-shadow: 0 14px 32px rgba(93, 123, 255, 0.35);
+        }
+
+        .btn.secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+        }
+
+        .btn:hover,
+        .btn:focus-visible {
+            transform: translateY(-2px) scale(1.01);
+        }
+
+        .hero-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .parallax-decor {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .parallax-decor span {
+            position: absolute;
+            width: clamp(140px, 12vw, 220px);
+            height: clamp(140px, 12vw, 220px);
+            background: linear-gradient(135deg, rgba(58, 242, 255, 0.25), rgba(255, 92, 241, 0.18));
+            border-radius: 36% 64% 58% 42% / 60% 35% 65% 40%;
+            filter: blur(0px);
+            opacity: 0.75;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .knowledge-search {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+
+        .knowledge-search input {
+            flex: 1 1 320px;
+            padding: 0.85rem 1.1rem;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(10, 14, 32, 0.6);
+            color: var(--text-primary);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+            transition: border-color var(--transition-base), background var(--transition-base);
+        }
+
+        [data-theme="light"] .knowledge-search input {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(23, 26, 60, 0.1);
+        }
+
+        .knowledge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.4rem;
+        }
+
+        .knowledge-card {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 1.6rem;
+            box-shadow: var(--shadow-strong);
+            backdrop-filter: blur(var(--blur-level));
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            display: grid;
+            gap: 0.75rem;
+            transition: transform 0.25s ease, border-color 0.25s ease;
+            cursor: pointer;
+        }
+
+        .knowledge-card:hover,
+        .knowledge-card:focus-visible {
+            transform: translateY(-6px);
+            border-color: rgba(58, 242, 255, 0.45);
+            outline: none;
+        }
+
+        .knowledge-card .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .knowledge-card .tags span {
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.76rem;
+            background: rgba(58, 242, 255, 0.12);
+            color: var(--accent-cyan);
+        }
+
+        [data-theme="light"] .knowledge-card .tags span {
+            background: rgba(58, 242, 255, 0.16);
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            display: none;
+            place-items: center;
+            background: rgba(4, 7, 20, 0.68);
+            backdrop-filter: blur(16px);
+            z-index: 1200;
+        }
+
+        .modal-backdrop.active {
+            display: grid;
+            animation: fadeIn 280ms ease forwards;
+        }
+
+        .modal-panel {
+            width: min(780px, 92vw);
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 2.2rem;
+            border-radius: 24px;
+            background: var(--bg-secondary);
+            box-shadow: 0 28px 60px rgba(0, 0, 0, 0.4);
+            display: grid;
+            gap: 1.5rem;
+            animation: slideUp 320ms ease;
+        }
+
+        .modal-panel h3 {
+            font-size: 2rem;
+        }
+
+        .modal-panel ul li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .modal-panel ul li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.6rem;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-magenta), var(--accent-cyan));
+        }
+
+        .modal-close {
+            justify-self: end;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            border-radius: 999px;
+            padding: 0.4rem 0.9rem;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .playground-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.6rem;
+        }
+
+        .module {
+            background: var(--bg-elevated);
+            border-radius: 22px;
+            padding: 1.8rem;
+            display: grid;
+            gap: 1rem;
+            box-shadow: var(--shadow-strong);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .module h3 {
+            font-size: 1.4rem;
+        }
+
+        .module label {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .module input,
+        .module select,
+        .module textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(11, 14, 30, 0.6);
+            color: var(--text-primary);
+            transition: border-color var(--transition-base), background var(--transition-base);
+        }
+
+        [data-theme="light"] .module input,
+        [data-theme="light"] .module select,
+        [data-theme="light"] .module textarea {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(26, 28, 68, 0.1);
+        }
+
+        .results {
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .idea-card {
+            border-radius: 16px;
+            padding: 1rem;
+            background: rgba(58, 242, 255, 0.12);
+            border: 1px solid rgba(58, 242, 255, 0.3);
+            animation: popIn 300ms ease;
+        }
+
+        .explanation {
+            padding: 1rem;
+            border-radius: 14px;
+            background: rgba(255, 92, 241, 0.12);
+            border: 1px solid rgba(255, 92, 241, 0.25);
+            min-height: 120px;
+        }
+
+        .learning-path {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .progress-track {
+            position: relative;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .progress-track span {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-lime));
+            transform-origin: left center;
+            transform: scaleX(0);
+            transition: transform 400ms ease;
+        }
+
+        .path-step {
+            background: rgba(255, 255, 255, 0.06);
+            padding: 1rem 1.1rem;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: grid;
+            gap: 0.35rem;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: rgba(93, 123, 255, 0.18);
+            color: var(--accent-cyan);
+            padding: 0.25rem 0.7rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+        }
+
+        .knowledge-map {
+            position: relative;
+            border-radius: 26px;
+            padding: 3rem 2rem 4rem;
+            background: linear-gradient(145deg, rgba(39, 34, 74, 0.8), rgba(13, 18, 36, 0.85));
+            overflow: hidden;
+            box-shadow: var(--shadow-strong);
+        }
+
+        .knowledge-map canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.2;
+        }
+
+        .nodes {
+            position: relative;
+            width: 100%;
+            min-height: 320px;
+        }
+
+        .map-node {
+            position: absolute;
+            padding: 0.6rem 1rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            cursor: pointer;
+            transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+            font-size: 0.9rem;
+        }
+
+        .map-node.related {
+            background: rgba(58, 242, 255, 0.18);
+            box-shadow: 0 12px 28px rgba(58, 242, 255, 0.22);
+        }
+
+        .map-description {
+            text-align: center;
+            min-height: 80px;
+            padding: 1rem 1.4rem;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dashboard {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .dashboard-top {
+            display: grid;
+            grid-template-columns: minmax(280px, 1fr) minmax(360px, 1.4fr);
+            gap: 1.6rem;
+        }
+
+        .chat-panel,
+        .metrics-panel {
+            background: var(--bg-elevated);
+            border-radius: 22px;
+            padding: 1.8rem;
+            display: grid;
+            gap: 1rem;
+            box-shadow: var(--shadow-strong);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .chat-history {
+            max-height: 320px;
+            overflow-y: auto;
+            display: grid;
+            gap: 1rem;
+            padding-right: 0.6rem;
+        }
+
+        .message {
+            padding: 0.75rem 1rem;
+            border-radius: 16px;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .message.user {
+            align-self: end;
+            background: rgba(58, 242, 255, 0.18);
+            border: 1px solid rgba(58, 242, 255, 0.35);
+        }
+
+        .message.ai {
+            background: rgba(255, 92, 241, 0.12);
+            border: 1px solid rgba(255, 92, 241, 0.25);
+        }
+
+        .chat-controls {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .chat-controls textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+        }
+
+        .metric-card {
+            padding: 1rem 1.2rem;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+        }
+
+        .metric-card h4 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            margin-bottom: 0.4rem;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .roadmap-grid {
+            display: grid;
+            gap: 1.4rem;
+        }
+
+        .roadmap-item {
+            padding: 1.5rem;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .roadmap-item .phase {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-magenta);
+        }
+
+        footer {
+            padding: 2rem 0 3rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 600ms ease, transform 600ms ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @media (max-width: 980px) {
+            header {
+                padding: 0 1.2rem;
+            }
+
+            nav ul {
+                gap: 0.5rem;
+            }
+
+            .dashboard-top {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 720px) {
+            header {
+                flex-wrap: wrap;
+                gap: 0.75rem;
+                height: auto;
+                padding: 0.8rem 1rem;
+            }
+
+            .layout {
+                padding-top: calc(var(--header-height) + 40px);
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .cta-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+    <script type="application/manifest+json">
+        {
+            "name": "NeuroAtlas",
+            "short_name": "NeuroAtlas",
+            "start_url": "./",
+            "display": "standalone",
+            "background_color": "#050510",
+            "theme_color": "#3af2ff",
+            "icons": []
+        }
+    </script>
 </head>
 <body>
-    <div class="noise-overlay" aria-hidden="true"></div>
-    <header class="hero" id="inicio">
-        <div class="hero__collage" aria-hidden="true">
-            <img src="assets/collage-sticker1.png" alt="Sticker de corazón roto" class="collage-item collage-item--one">
-            <img src="assets/collage-sticker2.png" alt="Sticker de cursor retro" class="collage-item collage-item--two">
-            <img src="assets/collage-sticker3.png" alt="Sticker de estrella" class="collage-item collage-item--three">
-            <img src="assets/collage-sticker4.png" alt="Sticker de ventana retro" class="collage-item collage-item--four">
-        </div>
-        <div class="hero__content">
-            <h1 class="hero__title">TUSU</h1>
-            <p class="hero__subtitle">Moda sin filtro. Humor incorrecto. Caos curado.</p>
-            <p class="hero__tagline" id="rotating-text">Modo terapia OFF</p>
-            <a href="#manifiesto" class="hero__scroll">↓ Seguí bajando</a>
-        </div>
-    </header>
-
-    <main>
-        <section class="section manifiesto" id="manifiesto">
-            <div class="section__inner">
-                <h2 class="section__title">Manifiesto</h2>
-                <p class="manifiesto__text">
-                    <span class="keyword">No hacemos ropa básica.</span><br>
-                    Hacemos remeras para gente que habla como piensa: mal, tarde y con honestidad brutal.<br>
-                    <span class="keyword">TUSU es humor</span>, doble sentido y estética dosmilera.<br>
-                    Si incomoda un poco, <span class="keyword">funciona.</span>
-                </p>
-            </div>
-        </section>
-
-        <section class="section collections" id="colecciones">
-            <div class="section__inner">
-                <h2 class="section__title">Colecciones</h2>
-                <div class="collections__grid">
-                    <article class="collection-card" data-direction="left">
-                        <img src="assets/mockup-socialmente-incorrecta.png" alt="Remera TUSU Socialmente Incorrecta" class="collection-card__image">
-                        <div class="collection-card__content">
-                            <h3>Socialmente Incorrecta</h3>
-                            <p>Modo terapia: cerrado.</p>
-                        </div>
-                    </article>
-                    <article class="collection-card" data-direction="up">
-                        <img src="assets/mockup-identidad-caos.png" alt="Remera TUSU Identidad en Caos" class="collection-card__image">
-                        <div class="collection-card__content">
-                            <h3>Identidad en Caos</h3>
-                            <p>Autodestrucción pero cute.</p>
-                        </div>
-                    </article>
-                    <article class="collection-card" data-direction="right">
-                        <img src="assets/mockup-fiesta-resaca.png" alt="Remera TUSU Fiesta y Resaca" class="collection-card__image">
-                        <div class="collection-card__content">
-                            <h3>Fiesta y Resaca</h3>
-                            <p>Club del insomnio chic.</p>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section class="section games" id="juegos">
-            <div class="section__inner">
-                <h2 class="section__title">Juegos Interactivos TUSU</h2>
-                <p class="section__description">Mazos de cartas en JSON animados para reels, fiestas y previas. Pausá el video y descubrí tu carta.</p>
-                <div class="games__floating-cards" aria-hidden="true">
-                    <div class="floating-card floating-card--one">💿</div>
-                    <div class="floating-card floating-card--two">✨</div>
-                    <div class="floating-card floating-card--three">😈</div>
-                    <div class="floating-card floating-card--four">🧬</div>
-                </div>
-                <pre class="code-block">
-{
-  "mazo": "Fiesta y Resaca",
-  "carta": {
-    "frase": "Tomá agua entre cada trago, reina del caos.",
-    "nivel": "riesgo alto",
-    "acción": "Elegí quién manda la próxima nota de voz vergonzosa."
-  }
-}
-                </pre>
-            </div>
-        </section>
-
-        <section class="section moodboard" id="moodboard">
-            <div class="section__inner">
-                <h2 class="section__title">Moodboard</h2>
-                <div class="moodboard__grid">
-                    <div class="mood-item mood-item--pink">assets/glitter-heart.png</div>
-                    <div class="mood-item mood-item--blue">assets/sad-smiley.png</div>
-                    <div class="mood-item mood-item--white">assets/retro-window.png</div>
-                    <div class="mood-item mood-item--red">assets/fire-flame.png</div>
-                    <div class="mood-item mood-item--pink">assets/tusu-logo-sticker.png</div>
-                    <div class="mood-item mood-item--white">assets/angel-number.png</div>
-                    <div class="mood-item mood-item--blue">assets/pixel-stars.png</div>
-                    <div class="mood-item mood-item--red">assets/gloss-lips.png</div>
-                    <div class="mood-item mood-item--pink">assets/old-browser.png</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section why" id="porque">
-            <div class="section__inner">
-                <h2 class="section__title">Por qué TUSU vende</h2>
-                <ul class="why__list">
-                    <li>Diseños pensados para redes primero.</li>
-                    <li>Estética lista para TikTok, IG Reels y Etsy.</li>
-                    <li>Mensajes provocadores pero inteligentes.</li>
-                    <li>Escalable con IA: más frases, más mazos, más colecciones.</li>
+    <div class="layout">
+        <header>
+            <div class="brand"><span>NA</span> NeuroAtlas</div>
+            <nav aria-label="Principal">
+                <ul>
+                    <li><a href="#hero" data-link="hero">Hero</a></li>
+                    <li><a href="#conocimiento" data-link="conocimiento">Conocimiento</a></li>
+                    <li><a href="#playground" data-link="playground">Playground</a></li>
+                    <li><a href="#mapa" data-link="mapa">Mapa</a></li>
+                    <li><a href="#dashboard" data-link="dashboard">Dashboard IA</a></li>
+                    <li><a href="#roadmap" data-link="roadmap">Roadmap</a></li>
                 </ul>
-            </div>
-        </section>
+            </nav>
+            <button class="theme-toggle" type="button" aria-label="Cambiar tema">
+                <span aria-hidden="true">🌓</span>
+                <span>Modo</span>
+            </button>
+        </header>
 
-        <section class="section contact" id="contacto">
-            <div class="section__inner">
-                <h2 class="section__title">¿Querés sumar TUSU a tu tienda o proyecto?</h2>
-                <form class="contact__form">
-                    <div class="form__group">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
-                    </div>
-                    <div class="form__group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="tu@correo.com" required>
-                    </div>
-                    <div class="form__group">
-                        <label for="mensaje">Mensaje</label>
-                        <textarea id="mensaje" name="mensaje" rows="4" placeholder="Contanos qué idea tenés"></textarea>
-                    </div>
-                    <button type="submit" class="btn">Enviar vibra</button>
-                </form>
-                <div class="contact__socials">
-                    <a href="https://instagram.com" aria-label="Instagram TUSU" class="social-link">
-                        <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm0 2a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H7zm5 3a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6zm6.5-.75a1.25 1.25 0 11-2.5 0 1.25 1.25 0 012.5 0z"/></svg>
-                    </a>
-                    <a href="https://www.tiktok.com" aria-label="TikTok TUSU" class="social-link">
-                        <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><path d="M13.8 3.1c.9.8 2.1 1.4 3.4 1.5V8a6.8 6.8 0 01-3.4-1V15a4.8 4.8 0 11-4-4.7v2.4a2.4 2.4 0 102.1 2.3V3h1.9z"/></svg>
-                    </a>
-                    <a href="https://www.etsy.com" aria-label="Etsy TUSU" class="social-link">
-                        <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><path d="M5 3h14v2h-5v14h5v2H5v-2h5V5H5z"/></svg>
-                    </a>
+        <main>
+            <section class="hero" id="hero">
+                <canvas class="hero-canvas" aria-hidden="true"></canvas>
+                <div class="parallax-decor" aria-hidden="true">
+                    <span style="top: 10%; left: 12%;" data-depth="-15"></span>
+                    <span style="top: 22%; right: 10%;" data-depth="20"></span>
+                    <span style="bottom: 10%; left: 30%;" data-depth="12"></span>
                 </div>
-            </div>
-        </section>
-    </main>
+                <div class="hero-content reveal">
+                    <h1 class="hero-title">Inteligencia aplicada a programación, IA, datos, producto, negocios y más.</h1>
+                    <p class="hero-subtitle">NeuroAtlas es la alianza entre una IA avanzada y una ingeniería front-end senior. Explorá conocimiento profundo, prototipos interactivos y un tablero vivo de métricas simuladas sin salir de una sola página.</p>
+                    <div class="cta-group">
+                        <a class="btn" href="#conocimiento">Explorar conocimiento</a>
+                        <a class="btn secondary" href="#playground">Probar IA ahora</a>
+                    </div>
+                </div>
+            </section>
 
-    <footer class="footer">
-        <p>© 2024 TUSU — Moda sin filtro.</p>
-    </footer>
+            <section class="section alt" id="conocimiento">
+                <div class="section-inner">
+                    <div class="section-header reveal">
+                        <h2>Atlas de conocimiento estratégico</h2>
+                        <p>Conecta disciplinas clave con experiencias reales. Filtrá por temática y profundizá en cómo la IA potencia cada área operativa.</p>
+                    </div>
+                    <div class="knowledge-search reveal" data-reveal>
+                        <label for="search" class="visually-hidden">Buscar áreas</label>
+                        <input type="search" id="search" placeholder="Buscar por área, skill o descripción..." autocomplete="off">
+                    </div>
+                    <div class="knowledge-grid" id="knowledgeGrid"></div>
+                </div>
+            </section>
+
+            <section class="section" id="playground">
+                <div class="section-inner">
+                    <div class="section-header reveal">
+                        <h2>Playground IA multimodal</h2>
+                        <p>Tres módulos para experimentar con ideación estratégica, explicaciones ajustadas a contexto y rutas de aprendizaje guiadas.</p>
+                    </div>
+                    <div class="playground-grid">
+                        <article class="module reveal" data-module="ideas">
+                            <h3>Generador de ideas</h3>
+                            <label for="ideaContext">Contexto o problema</label>
+                            <textarea id="ideaContext" placeholder="Ej: Necesito una campaña para lanzar un feature fintech..." rows="3"></textarea>
+                            <label for="ideaArea">Área objetivo</label>
+                            <select id="ideaArea"></select>
+                            <button class="btn" type="button" id="generateIdeas">Generar ideas</button>
+                            <div class="results" id="ideaResults" aria-live="polite"></div>
+                        </article>
+
+                        <article class="module reveal" data-module="explicador">
+                            <h3>Explicador rápido</h3>
+                            <label for="conceptInput">Concepto</label>
+                            <input type="text" id="conceptInput" placeholder="Ej: Arquitectura hexagonal">
+                            <label for="levelSelect">Nivel</label>
+                            <select id="levelSelect">
+                                <option value="principiante">Principiante</option>
+                                <option value="intermedio">Intermedio</option>
+                                <option value="avanzado">Avanzado</option>
+                            </select>
+                            <button class="btn" type="button" id="explainConcept">Explicar</button>
+                            <div class="explanation" id="explanation" aria-live="polite"></div>
+                        </article>
+
+                        <article class="module reveal" data-module="ruta">
+                            <h3>Ruta de aprendizaje</h3>
+                            <label for="pathSelect">Elegí un objetivo</label>
+                            <select id="pathSelect">
+                                <option value="">Seleccionar...</option>
+                            </select>
+                            <div class="learning-path" id="learningPath"></div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section alt" id="mapa">
+                <div class="section-inner">
+                    <div class="section-header reveal">
+                        <h2>Mapa visual del conocimiento</h2>
+                        <p>Explorá cómo cada nodo de expertise se relaciona con otros. Descubrí conexiones críticas para diseñar soluciones integrales.</p>
+                    </div>
+                    <div class="knowledge-map reveal">
+                        <div class="nodes" id="mapNodes"></div>
+                        <div class="map-description" id="mapDescription">Interactuá con un nodo para ver las sinergias estratégicas.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="dashboard">
+                <div class="section-inner">
+                    <div class="section-header reveal">
+                        <h2>Dashboard de IA simulada</h2>
+                        <p>Conversá con la IA, observá métricas auto-actualizadas y entendé el pulso de la inteligencia aplicada a tus proyectos.</p>
+                    </div>
+                    <div class="dashboard">
+                        <div class="dashboard-top">
+                            <div class="chat-panel reveal">
+                                <h3>Chat contextual</h3>
+                                <div class="chat-history" id="chatHistory" aria-live="polite"></div>
+                                <div class="chat-controls">
+                                    <label for="chatMode">Modo</label>
+                                    <select id="chatMode">
+                                        <option value="code">Code review</option>
+                                        <option value="strategy">Estrategia de negocio</option>
+                                        <option value="funnel">Optimización de funnel</option>
+                                        <option value="ux">Diseño UX UI</option>
+                                        <option value="data">Análisis de datos</option>
+                                    </select>
+                                    <label for="chatInput">Mensaje</label>
+                                    <textarea id="chatInput" placeholder="Escribe tu reto o pregunta..." rows="3"></textarea>
+                                    <button class="btn" type="button" id="sendChat">Enviar</button>
+                                </div>
+                            </div>
+                            <div class="metrics-panel reveal">
+                                <h3>Impacto en tiempo real</h3>
+                                <div class="metrics-grid">
+                                    <div class="metric-card">
+                                        <h4>Prompts procesados hoy</h4>
+                                        <div class="metric-value" data-metric="prompts">0</div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <h4>Áreas de expertise activas</h4>
+                                        <div class="metric-value" data-metric="expertise">0</div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <h4>Ideas generadas</h4>
+                                        <div class="metric-value" data-metric="ideas">0</div>
+                                    </div>
+                                    <div class="metric-card">
+                                        <h4>Rutas aprendidas</h4>
+                                        <div class="metric-value" data-metric="paths">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section alt" id="roadmap">
+                <div class="section-inner">
+                    <div class="section-header reveal">
+                        <h2>Roadmap de evolución</h2>
+                        <p>Plan estratégico para escalar NeuroAtlas como plataforma autosuficiente y colaborativa.</p>
+                    </div>
+                    <div class="roadmap-grid">
+                        <div class="roadmap-item reveal">
+                            <span class="phase">Q2 2024</span>
+                            <h3>Modelos generativos especializados</h3>
+                            <p>Incorporar perfiles de IA sintéticos entrenados con datasets curados de industrias verticales.</p>
+                        </div>
+                        <div class="roadmap-item reveal">
+                            <span class="phase">Q3 2024</span>
+                            <h3>Motor de conocimiento vivo</h3>
+                            <p>Orquestar sincronización automática con fuentes científicas y repositorios open source para mantener la base actualizada.</p>
+                        </div>
+                        <div class="roadmap-item reveal">
+                            <span class="phase">Q4 2024</span>
+                            <h3>Playground colaborativo</h3>
+                            <p>Permitir sesiones multiusuario, anotaciones compartidas y paquetes descargables de experimentos.</p>
+                        </div>
+                        <div class="roadmap-item reveal">
+                            <span class="phase">2025+</span>
+                            <h3>Marketplace de aceleradores</h3>
+                            <p>Habilitar plugins desarrollados por la comunidad con auditoría automatizada y métricas de impacto.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2024 NeuroAtlas. Ingeniería de interfaces y conocimiento aumentado.</p>
+        </footer>
+    </div>
+
+    <div class="modal-backdrop" id="knowledgeModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"></div>
+
+    <script>
+        const qs = (selector, scope = document) => scope.querySelector(selector);
+        const qsa = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
+
+        const knowledgeAreas = [
+            {
+                id: "programacion",
+                title: "Programación",
+                summary: "Arquitectura limpia, testing profundo y entrega continua.",
+                tags: ["Clean Code", "Testing", "CI/CD"],
+                detail: {
+                    description: "Diseñar y sostener bases de código robustas que evolucionen sin deuda, alineando patrones modernos con la estrategia de negocio.",
+                    concepts: [
+                        "Modularización orientada a dominios",
+                        "Testing piramidal con contratos",
+                        "Revisiones automatizadas de calidad",
+                        "Observabilidad desde el código",
+                        "Feature flags inteligentes"
+                    ],
+                    examples: [
+                        "Prioriza refactorizaciones con análisis de impacto basado en grafos de dependencias.",
+                        "Genera pruebas unitarias y de contrato que cubren escenarios reales de negocio.",
+                        "Sugiere patrones de arquitectura según métricas de complejidad en tiempo real."
+                    ]
+                }
+            },
+            {
+                id: "ia",
+                title: "IA y ML",
+                summary: "Modelos generativos, pipelines MLOps y ética aplicada.",
+                tags: ["LLMs", "MLOps", "Responsible AI"],
+                detail: {
+                    description: "Construir modelos interpretables y escalables que resuelvan problemas con datos heterogéneos y ciclos de vida complejos.",
+                    concepts: [
+                        "Fine-tuning con alineación RLHF",
+                        "Pipelines reproducibles con feature store",
+                        "Evaluaciones continuas con métricas compuestas",
+                        "Ciclos de feedback humano en lazo",
+                        "Seguridad frente a prompt injection"
+                    ],
+                    examples: [
+                        "Propone datasets sintéticos balanceados según sesgos detectados.",
+                        "Genera reportes de deriva del modelo con recomendaciones accionables.",
+                        "Optimiza prompts y cadenas de herramientas para asistentes especializados."
+                    ]
+                }
+            },
+            {
+                id: "data",
+                title: "Data Science",
+                summary: "Del ETL a la visualización narrativa.",
+                tags: ["Analytics", "ETL", "Storytelling"],
+                detail: {
+                    description: "Transformar datos en decisiones con pipelines confiables, modelos analíticos y comunicación ejecutiva basada en evidencia.",
+                    concepts: [
+                        "Modelado dimensional y semántica",
+                        "Series temporales con Fourier avanzado",
+                        "Data contracts y calidad operacional",
+                        "Análisis causal y uplift",
+                        "Narrativas guiadas por insight"
+                    ],
+                    examples: [
+                        "Detecta anomalías en métricas clave y sugiere hipótesis a validar.",
+                        "Genera notebooks comentados para stakeholders técnicos y no técnicos.",
+                        "Crea tableros adaptativos según rol del usuario."
+                    ]
+                }
+            },
+            {
+                id: "arquitectura",
+                title: "Arquitectura de Sistemas",
+                summary: "Diseño distribuido resiliente y gobernanza técnica.",
+                tags: ["Microservicios", "Event-driven", "Governance"],
+                detail: {
+                    description: "Definir topologías que soporten escala, resiliencia y evolución, alineadas a dominios y flujos de valor.",
+                    concepts: [
+                        "Domain-Driven Design táctico",
+                        "Topologías event-driven y orquestación",
+                        "Resiliencia con patrones de degradación",
+                        "Catálogos de APIs gobernados",
+                        "Ciclos de ADR y toma de decisiones"
+                    ],
+                    examples: [
+                        "Evalúa trade-offs entre coreografías y orquestadores para cada caso.",
+                        "Sugiere límites de servicio basados en análisis de cohesión de datos.",
+                        "Simula fallas para validar estrategias de resiliencia."
+                    ]
+                }
+            },
+            {
+                id: "devops",
+                title: "DevOps",
+                summary: "Entrega continua con observabilidad total.",
+                tags: ["IaC", "Observabilidad", "SRE"],
+                detail: {
+                    description: "Automatizar la infraestructura y asegurar despliegues rápidos, seguros y monitoreados.",
+                    concepts: [
+                        "Pipelines GitOps declarativos",
+                        "SLOs y error budgets",
+                        "Monitoreo sintético y real",
+                        "Gestión de secretos cifrada",
+                        "Runbooks autoactualizados"
+                    ],
+                    examples: [
+                        "Genera pipelines reutilizables con validaciones previas.",
+                        "Sugiere SLOs basados en patrones de uso y negocio.",
+                        "Crea alertas con umbrales dinámicos y reducción de ruido."
+                    ]
+                }
+            },
+            {
+                id: "ciberseguridad",
+                title: "Ciberseguridad",
+                summary: "Defensa proactiva y cultura de seguridad.",
+                tags: ["Zero Trust", "Threat Modeling", "Compliance"],
+                detail: {
+                    description: "Asegurar plataformas y datos con enfoque integral, desde diseño hasta operación diaria.",
+                    concepts: [
+                        "Arquitectura Zero Trust",
+                        "Gestión de identidades federadas",
+                        "Respuesta a incidentes automatizada",
+                        "Escaneos de superficie de ataque",
+                        "Cumplimiento regulatorio continuo"
+                    ],
+                    examples: [
+                        "Genera matrices de amenazas específicas por dominio.",
+                        "Sugiere políticas de acceso dinámicas por contexto.",
+                        "Automatiza playbooks de respuesta a incidentes críticos."
+                    ]
+                }
+            },
+            {
+                id: "product",
+                title: "Product Management",
+                summary: "Construcción orientada a outcomes.",
+                tags: ["Discovery", "Prioritización", "OKRs"],
+                detail: {
+                    description: "Alinear negocio, tecnología y experiencia para entregar valor validado continuamente.",
+                    concepts: [
+                        "Continuous discovery y research ops",
+                        "Matrices de priorización adaptables",
+                        "Mapas de oportunidad",
+                        "Métricas North Star",
+                        "Gestión de portafolio basado en datos"
+                    ],
+                    examples: [
+                        "Crea experimentos alineados a hipótesis de impacto.",
+                        "Sugiere roadmaps flexibles conectados a OKRs.",
+                        "Elabora briefs ejecutivos para stakeholders clave."
+                    ]
+                }
+            },
+            {
+                id: "ux",
+                title: "UX UI",
+                summary: "Experiencias accesibles y medibles.",
+                tags: ["Research", "Design Systems", "Accesibilidad"],
+                detail: {
+                    description: "Diseñar interfaces intuitivas con sistemas escalables, centrados en datos y métricas de experiencia.",
+                    concepts: [
+                        "Arquitectura de información dinámica",
+                        "Design tokens gobernados",
+                        "Evaluaciones heurísticas con métricas",
+                        "Pruebas con usuarios remotas",
+                        "Accesibilidad WCAG avanzada"
+                    ],
+                    examples: [
+                        "Propone flujos optimizados según objetivos del usuario.",
+                        "Genera documentación de design system alineada a componentes.",
+                        "Analiza datos de uso para recomendar mejoras iterativas."
+                    ]
+                }
+            },
+            {
+                id: "marketing",
+                title: "Marketing Digital",
+                summary: "Atribución holística y creatividad escalable.",
+                tags: ["Performance", "Content", "Analytics"],
+                detail: {
+                    description: "Unificar paid, owned y earned media con automatización inteligente y narrativa consistente.",
+                    concepts: [
+                        "Modelos de atribución multitouch",
+                        "Content ops y calendarización",
+                        "Personalización por segmentos",
+                        "Automatización de campañas",
+                        "Optimización de copy basada en datos"
+                    ],
+                    examples: [
+                        "Genera variaciones creativas alineadas a cohortes.",
+                        "Sugiere experimentos de anuncios con métricas proyectadas.",
+                        "Orquesta flujos de nurturing automatizados."
+                    ]
+                }
+            },
+            {
+                id: "growth",
+                title: "Growth",
+                summary: "Escala sostenible guiada por experimentación.",
+                tags: ["Growth Loops", "A/B Testing", "Retención"],
+                detail: {
+                    description: "Construir loops de crecimiento, optimizar embudos y acelerar ciclos de aprendizaje.",
+                    concepts: [
+                        "Mapeo de loops de adquisición y retención",
+                        "Diseño de experimentos multivariante",
+                        "Métricas de retención por cohorte",
+                        "Growth scoring",
+                        "Integración con producto y marketing"
+                    ],
+                    examples: [
+                        "Prioriza experimentos según impacto esperado.",
+                        "Genera reportes de resultados con interpretación accionable.",
+                        "Sugiere automatizaciones para mejorar activación."
+                    ]
+                }
+            },
+            {
+                id: "negocios",
+                title: "Negocios y Estrategia",
+                summary: "Visión integral para escalar organizaciones.",
+                tags: ["Modelos de negocio", "Finanzas", "Operaciones"],
+                detail: {
+                    description: "Definir estrategias de mercado, proyecciones financieras y modelos operativos resilientes.",
+                    concepts: [
+                        "Análisis de unit economics",
+                        "Matriz de posicionamiento competitivo",
+                        "Modelos de pricing dinámico",
+                        "Gestión del portafolio de innovación",
+                        "Gobernanza de datos ejecutiva"
+                    ],
+                    examples: [
+                        "Simula escenarios financieros con sensibilidad multivariable.",
+                        "Sugiere estrategias de diversificación y alianzas.",
+                        "Crea storyboards ejecutivos para presentar decisiones críticas."
+                    ]
+                }
+            },
+            {
+                id: "productividad",
+                title: "Productividad",
+                summary: "Sistemas personales y operativos optimizados.",
+                tags: ["Automatización", "Focus", "Prioridades"],
+                detail: {
+                    description: "Diseñar rutinas y automatizaciones que multiplican el impacto individual y de equipos.",
+                    concepts: [
+                        "Captura y revisión sistemática",
+                        "Automatización con scripts y no-code",
+                        "Tableros operativos vivos",
+                        "Gestión del tiempo basada en energía",
+                        "Comunicación asincrónica efectiva"
+                    ],
+                    examples: [
+                        "Automatiza integraciones entre herramientas clave.",
+                        "Propone rituales de planificación con métricas de foco.",
+                        "Diseña paneles personales para seguimiento de objetivos."
+                    ]
+                }
+            },
+            {
+                id: "ciencia",
+                title: "Ciencia y Matemática",
+                summary: "Fundamentos rigurosos para modelar el mundo.",
+                tags: ["Cálculo", "Estadística", "Simulación"],
+                detail: {
+                    description: "Aplicar marcos científicos y matemáticos para construir modelos verificados y predicciones confiables.",
+                    concepts: [
+                        "Inferencia bayesiana aplicada",
+                        "Optimización convexa y heurística",
+                        "Simulaciones Monte Carlo",
+                        "Modelos epidemiológicos y de difusión",
+                        "Teoría de la información"
+                    ],
+                    examples: [
+                        "Genera simulaciones rápidas con explicación de supuestos.",
+                        "Sugiere modelos matemáticos según tipo de problema.",
+                        "Entrega interpretaciones visuales para comunicar hallazgos."
+                    ]
+                }
+            }
+        ];
+        const learningPaths = {
+            fullstack: {
+                label: "Full Stack Profesional",
+                progress: 0.68,
+                steps: [
+                    { title: "Fundamentos sólidos", description: "Domina JavaScript moderno, patrones asincrónicos y tipado progresivo.", badge: "Base" },
+                    { title: "Backend escalable", description: "Arquitectura hexagonal, APIs resilientes y bases de datos distribuidas.", badge: "Backend" },
+                    { title: "Frontend avanzado", description: "Componentización accesible, performance y testing end-to-end.", badge: "Frontend" },
+                    { title: "DevOps práctico", description: "CI/CD, infraestructura como código y observabilidad integrada.", badge: "Ops" }
+                ]
+            },
+            ia: {
+                label: "Especialista en IA y ML",
+                progress: 0.74,
+                steps: [
+                    { title: "Ciencia de datos aplicada", description: "Limpieza, análisis exploratorio y validaciones rigurosas.", badge: "Data" },
+                    { title: "Modelado y entrenamiento", description: "Seleccioná arquitecturas, tuning y métricas de evaluación.", badge: "Modelos" },
+                    { title: "MLOps end-to-end", description: "Automatiza despliegues, monitoreo y retraining.", badge: "MLOps" },
+                    { title: "IA responsable", description: "Mitigá sesgos, auditá resultados y diseñá experiencias seguras.", badge: "Ética" }
+                ]
+            },
+            data: {
+                label: "Data Scientist",
+                progress: 0.62,
+                steps: [
+                    { title: "Modelado de datos", description: "Diseñá esquemas semánticos y pipelines escalables.", badge: "Modelado" },
+                    { title: "Modelos predictivos", description: "Aplica regresiones, clasificadores y modelos probabilísticos.", badge: "ML" },
+                    { title: "Experimentación", description: "Diseñá experimentos y pruebas de significancia.", badge: "Experimentos" },
+                    { title: "Narrativa ejecutiva", description: "Comunica insights con impacto y decisiones accionables.", badge: "Storytelling" }
+                ]
+            },
+            growth: {
+                label: "Growth Marketer",
+                progress: 0.57,
+                steps: [
+                    { title: "Investigación y segmentación", description: "Detectá necesidades, define cohorts y prioriza audiencias.", badge: "Research" },
+                    { title: "Experimentación y loops", description: "Construí experimentos y loops de adquisición y retención.", badge: "Loops" },
+                    { title: "Analítica accionable", description: "Configura métricas, dashboards y atribución.", badge: "Analytics" },
+                    { title: "Automatización creativa", description: "Escalá contenidos y personalización con IA.", badge: "Automation" }
+                ]
+            },
+            producto: {
+                label: "Líder de Producto",
+                progress: 0.66,
+                steps: [
+                    { title: "Descubrimiento continuo", description: "Integra research, datos y validación en cada iteración.", badge: "Discovery" },
+                    { title: "Estrategia y roadmap", description: "Conecta OKRs con entregables iterativos de alto valor.", badge: "Estrategia" },
+                    { title: "Liderazgo transversal", description: "Alinea equipos de ingeniería, diseño y negocio.", badge: "Liderazgo" },
+                    { title: "Escala organizacional", description: "Implementa gobierno, métricas y comunicación efectiva.", badge: "Escala" }
+                ]
+            }
+        };
+
+        const ideaTemplates = {
+            programacion: [
+                ctx => `Implementá un pipeline de "code health" que evalúe métricas de deuda técnica y notifique en Slack cuando ${ctx} comprometa mantenibilidad.`,
+                ctx => `Prototipá un entorno de feature flags orquestados que permitan lanzar ${ctx} en cohortes controladas.`,
+                ctx => `Usá análisis estático combinado con cobertura para priorizar refactorizaciones vinculadas a ${ctx}.`
+            ],
+            ia: [
+                ctx => `Entrená un modelo de clasificación de intención que detecte oportunidades en ${ctx} y habilite respuestas automáticas.`,
+                ctx => `Generá embeddings específicos y construí un buscador semántico que conecte ${ctx} con conocimientos históricos.`,
+                ctx => `Automatizá un pipeline de evaluación continua para asegurar que ${ctx} mantenga métricas éticas.`
+            ],
+            data: [
+                ctx => `Diseñá un data mart temático para ${ctx} con contratos de datos que validen calidad en cada carga.`,
+                ctx => `Creá dashboards narrativos que conecten KPIs de ${ctx} con hipótesis de impacto.`,
+                ctx => `Configura alertas de anomalías que aprendan comportamientos estacionales de ${ctx}.`
+            ],
+            arquitectura: [
+                ctx => `Modelá eventos core para ${ctx} y definí bounded contexts con ownership claro.`,
+                ctx => `Implementá patrones de resiliencia (circuit breakers, bulkheads) orientados a ${ctx}.`,
+                ctx => `Organizá un ADR sprint para validar decisiones arquitectónicas de ${ctx} y documentarlas.`
+            ],
+            devops: [
+                ctx => `Automatizá infraestructura con Terraform y políticas que protejan ${ctx} en cada despliegue.`,
+                ctx => `Integra canary releases para ${ctx} con monitoreo sintético en minutos.`,
+                ctx => `Orquestá runbooks interactivos para ${ctx} con métricas de confiabilidad.`
+            ],
+            ciberseguridad: [
+                ctx => `Diseñá un threat model específico para ${ctx} incorporando escenarios de abuso.`,
+                ctx => `Implementá autenticación adaptativa que reaccione a anomalías en ${ctx}.`,
+                ctx => `Construí un tablero de cumplimiento que audite ${ctx} frente a normativas clave.`
+            ],
+            product: [
+                ctx => `Mapeá jobs-to-be-done relacionados a ${ctx} y generá historias priorizadas.`,
+                ctx => `Diseñá un proceso de discovery continuo con sesiones quincenales enfocadas en ${ctx}.`,
+                ctx => `Armá un tablero de OKRs que conecte ${ctx} con resultados mensurables.`
+            ],
+            ux: [
+                ctx => `Realizá un workshop de co-creación para ${ctx} y sintetizá hallazgos en blueprint de servicio.`,
+                ctx => `Actualizá el design system con componentes accesibles que soporten ${ctx}.`,
+                ctx => `Prepará test remoto moderado para validar ${ctx} con métricas SUS.`
+            ],
+            marketing: [
+                ctx => `Diseñá un funnel multicanal para ${ctx} con experimentos A/B priorizados por impacto.`,
+                ctx => `Crea un calendario de contenidos que conecte ${ctx} con micro-momentos del usuario.`,
+                ctx => `Configura un sistema de lead scoring que priorice ${ctx} según intención.`
+            ],
+            growth: [
+                ctx => `Armá growth loops que conecten ${ctx} con referidos y retención.`,
+                ctx => `Define métricas de activación específicas para ${ctx} y experimentos asociados.`,
+                ctx => `Implementa un sistema de experiment tracking que aprenda del desempeño de ${ctx}.`
+            ],
+            negocios: [
+                ctx => `Desarrollá escenarios financieros para ${ctx} evaluando sensibilidad en ingresos y costos.`,
+                ctx => `Construí un narrative memo que posicione ${ctx} frente a competidores.`,
+                ctx => `Define KPIs estratégicos que midan el impacto de ${ctx} en el portafolio.`
+            ],
+            productividad: [
+                ctx => `Automatizá capturas de tareas relacionadas con ${ctx} usando integraciones ligeras.`,
+                ctx => `Diseñá rituales semanales que protejan tiempo profundo para ${ctx}.`,
+                ctx => `Configura tableros personales que visualicen progreso en ${ctx}.`
+            ],
+            ciencia: [
+                ctx => `Modelá ${ctx} con simulaciones Monte Carlo y analizá intervalos de confianza.`,
+                ctx => `Aplicá inferencia bayesiana para actualizar hipótesis en ${ctx}.`,
+                ctx => `Diseñá visualizaciones matemáticas que comuniquen ${ctx} a decision-makers.`
+            ]
+        };
+
+        const explainTemplates = {
+            principiante: concepto => `Imaginá que ${concepto} es una ciudad con barrios organizados. Cada barrio resuelve un problema distinto y se conectan por avenidas claras; así evitamos caos cuando la ciudad crece.`,
+            intermedio: concepto => `${concepto} estructura componentes para reducir acoplamiento. Define responsabilidades explícitas y contratos, lo que facilita pruebas, despliegues y colaboración entre equipos.`,
+            avanzado: concepto => `${concepto} optimiza la separación de dominios y puertos, favorece pruebas determinísticas, y habilita adaptadores independientes que evolucionan sin comprometer invariantes.`
+        };
+
+        const mapNodes = [
+            { id: "backend", label: "Backend", x: 12, y: 18, relates: ["apis", "arquitectura", "mlops"], description: "Servicios resilientes, escalables y gobernados." },
+            { id: "apis", label: "APIs", x: 44, y: 12, relates: ["backend", "llms", "experimentos"], description: "Interfaces contractuales para interoperar con precisión." },
+            { id: "llms", label: "LLMs", x: 76, y: 20, relates: ["mlops", "experimentos", "ux"], description: "Modelos de lenguaje adaptados a dominios específicos." },
+            { id: "mlops", label: "MLOps", x: 66, y: 46, relates: ["llms", "backend", "datos"], description: "Ciclos de vida completos para modelos en producción." },
+            { id: "datos", label: "Data Ops", x: 30, y: 48, relates: ["experimentos", "negocio", "backend"], description: "Gobierno, calidad y disponibilidad de datos críticos." },
+            { id: "experimentos", label: "Experimentos A/B", x: 54, y: 68, relates: ["growth", "ux", "negocio"], description: "Validación cuantitativa de hipótesis y mejoras." },
+            { id: "seo", label: "SEO técnico", x: 18, y: 68, relates: ["marketing", "growth", "ux"], description: "Visibilidad orgánica alineada a arquitectura y contenido." },
+            { id: "growth", label: "Growth", x: 76, y: 72, relates: ["experimentos", "marketing", "negocio"], description: "Loops sostenibles que aceleran adquisición y retención." },
+            { id: "negocio", label: "Estrategia", x: 40, y: 82, relates: ["datos", "growth", "ux"], description: "Toma de decisiones basada en evidencia y visión." },
+            { id: "ux", label: "UX UI", x: 12, y: 40, relates: ["llms", "seo", "experimentos"], description: "Diseño centrado en personas y métricas accionables." },
+            { id: "marketing", label: "Marketing", x: 84, y: 44, relates: ["seo", "growth", "negocio"], description: "Activación omnicanal con narrativa coherente." }
+        ];
+        const state = {
+            temaActual: localStorage.getItem("neuroatlas:tema") || "dark",
+            seccionActiva: "hero",
+            historialChat: JSON.parse(localStorage.getItem("neuroatlas:chat")) || [],
+            preferencias: {
+                ultimaRuta: localStorage.getItem("neuroatlas:ruta") || ""
+            },
+            metricas: {
+                prompts: Number(localStorage.getItem("neuroatlas:metric:prompts")) || 0,
+                expertise: Number(localStorage.getItem("neuroatlas:metric:expertise")) || 0,
+                ideas: Number(localStorage.getItem("neuroatlas:metric:ideas")) || 0,
+                paths: Number(localStorage.getItem("neuroatlas:metric:paths")) || 0
+            },
+            expertiseUsadas: new Set(JSON.parse(localStorage.getItem("neuroatlas:expertise:set")) || [])
+        };
+
+        const api = {
+            fetchAreaDetail(id) {
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        resolve(knowledgeAreas.find(area => area.id === id));
+                    }, 220);
+                });
+            },
+            generateIdeas(areaId, contexto) {
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        const plantilla = ideaTemplates[areaId] || [];
+                        const ideas = plantilla.slice(0, 4).map(fn => fn(contexto));
+                        resolve(ideas);
+                    }, 260);
+                });
+            },
+            explainConcept(concepto, nivel) {
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        const template = explainTemplates[nivel];
+                        resolve(template(concepto));
+                    }, 200);
+                });
+            },
+            getLearningPath(objetivo) {
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        resolve(learningPaths[objetivo]);
+                    }, 240);
+                });
+            }
+        };
+
+        function applyTheme(theme) {
+            document.documentElement.dataset.theme = theme;
+            localStorage.setItem("neuroatlas:tema", theme);
+        }
+
+        function toggleTheme() {
+            state.temaActual = state.temaActual === "dark" ? "light" : "dark";
+            applyTheme(state.temaActual);
+        }
+
+        function renderKnowledgeCards(filter = "") {
+            const container = qs("#knowledgeGrid");
+            container.innerHTML = "";
+            const fragment = document.createDocumentFragment();
+            const query = filter.trim().toLowerCase();
+            knowledgeAreas
+                .filter(area => {
+                    if (!query) return true;
+                    const fields = [area.title, area.summary, ...area.tags];
+                    return fields.some(text => text.toLowerCase().includes(query));
+                })
+                .forEach(area => {
+                    const card = document.createElement("article");
+                    card.className = "knowledge-card reveal";
+                    card.setAttribute("tabindex", "0");
+                    card.dataset.id = area.id;
+                    card.innerHTML = `
+                        <div>
+                            <h3>${area.title}</h3>
+                            <p>${area.summary}</p>
+                        </div>
+                        <div class="tags">${area.tags.map(tag => `<span>${tag}</span>`).join("")}</div>
+                    `;
+                    fragment.appendChild(card);
+                });
+            container.appendChild(fragment);
+            observeReveals();
+        }
+
+        function openKnowledgeModal(area) {
+            const modal = qs("#knowledgeModal");
+            modal.innerHTML = `
+                <div class="modal-panel" role="document">
+                    <button class="modal-close" type="button">Cerrar</button>
+                    <div>
+                        <h3 id="modalTitle">${area.title}</h3>
+                        <p>${area.detail.description}</p>
+                    </div>
+                    <div>
+                        <h4>Conceptos clave</h4>
+                        <ul>${area.detail.concepts.map(item => `<li>${item}</li>`).join("")}</ul>
+                    </div>
+                    <div>
+                        <h4>Cómo ayuda la IA</h4>
+                        <ul>${area.detail.examples.map(item => `<li>${item}</li>`).join("")}</ul>
+                    </div>
+                </div>
+            `;
+            modal.classList.add("active");
+            qs(".modal-close", modal).addEventListener("click", closeKnowledgeModal);
+            modal.addEventListener("click", e => { if (e.target === modal) closeKnowledgeModal(); });
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeKnowledgeModal() {
+            const modal = qs("#knowledgeModal");
+            modal.classList.remove("active");
+            modal.innerHTML = "";
+            document.body.style.overflow = "";
+        }
+
+        function populateSelects() {
+            const ideaSelect = qs("#ideaArea");
+            ideaSelect.innerHTML = knowledgeAreas.map(area => `<option value="${area.id}">${area.title}</option>`).join("");
+            const pathSelect = qs("#pathSelect");
+            Object.entries(learningPaths).forEach(([key, value]) => {
+                const option = document.createElement("option");
+                option.value = key;
+                option.textContent = value.label;
+                pathSelect.appendChild(option);
+            });
+            if (state.preferencias.ultimaRuta && learningPaths[state.preferencias.ultimaRuta]) {
+                pathSelect.value = state.preferencias.ultimaRuta;
+                loadLearningPath(state.preferencias.ultimaRuta, false);
+            }
+        }
+
+        function renderIdeas(ideas) {
+            const container = qs("#ideaResults");
+            container.innerHTML = ideas.map(text => `<div class="idea-card">${text}</div>`).join("\n");
+        }
+
+        function renderLearningPath(path) {
+            const container = qs("#learningPath");
+            if (!path) {
+                container.innerHTML = "";
+                return;
+            }
+            container.innerHTML = `
+                <div class="progress-track" aria-hidden="true"><span style="transform: scaleX(${path.progress});"></span></div>
+                ${path.steps.map(step => `
+                    <div class="path-step">
+                        <span class="badge">${step.badge}</span>
+                        <h4>${step.title}</h4>
+                        <p>${step.description}</p>
+                    </div>
+                `).join("")}
+            `;
+        }
+
+        function updateMetric(key, value) {
+            state.metricas[key] = value;
+            localStorage.setItem(`neuroatlas:metric:${key}`, String(value));
+            const element = qs(`[data-metric="${key}"]`);
+            if (element) animateNumber(element, value);
+        }
+
+        function animateNumber(element, value) {
+            const current = Number(element.textContent.replace(/[^\d.]/g, "")) || 0;
+            const start = performance.now();
+            const duration = 320;
+            const animate = now => {
+                const progress = Math.min((now - start) / duration, 1);
+                const eased = progress * (2 - progress);
+                const next = Math.round(current + (value - current) * eased);
+                element.textContent = next;
+                if (progress < 1) requestAnimationFrame(animate);
+            };
+            requestAnimationFrame(animate);
+        }
+
+        function incrementMetric(key, amount = 1) {
+            updateMetric(key, state.metricas[key] + amount);
+        }
+
+        function registerExpertise(areaId) {
+            state.expertiseUsadas.add(areaId);
+            updateMetric("expertise", state.expertiseUsadas.size);
+            localStorage.setItem("neuroatlas:expertise:set", JSON.stringify(Array.from(state.expertiseUsadas)));
+        }
+
+        function loadLearningPath(id, track = true) {
+            if (!id) {
+                renderLearningPath(null);
+                return;
+            }
+            api.getLearningPath(id).then(path => {
+                if (!path) return;
+                renderLearningPath(path);
+                if (track) updateMetric("paths", state.metricas.paths + 1);
+                state.preferencias.ultimaRuta = id;
+                localStorage.setItem("neuroatlas:ruta", id);
+            });
+        }
+
+        function setupKnowledgeInteractions() {
+            const grid = qs("#knowledgeGrid");
+            grid.addEventListener("click", async event => {
+                const card = event.target.closest(".knowledge-card");
+                if (!card) return;
+                const data = await api.fetchAreaDetail(card.dataset.id);
+                if (data) {
+                    openKnowledgeModal(data);
+                    registerExpertise(data.id);
+                }
+            });
+            grid.addEventListener("keydown", async event => {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    const card = event.target.closest(".knowledge-card");
+                    if (!card) return;
+                    const data = await api.fetchAreaDetail(card.dataset.id);
+                    if (data) {
+                        openKnowledgeModal(data);
+                        registerExpertise(data.id);
+                    }
+                }
+            });
+        }
+
+        function setupSearch() {
+            const input = qs("#search");
+            input.addEventListener("input", event => {
+                renderKnowledgeCards(event.target.value);
+            });
+        }
+
+        function setupIdeaGenerator() {
+            const button = qs("#generateIdeas");
+            button.addEventListener("click", () => {
+                const contexto = qs("#ideaContext").value.trim() || "un reto clave";
+                const area = qs("#ideaArea").value;
+                api.generateIdeas(area, contexto).then(ideas => {
+                    renderIdeas(ideas);
+                    registerExpertise(area);
+                    incrementMetric("ideas", ideas.length);
+                    incrementMetric("prompts", 1);
+                });
+            });
+        }
+
+        function setupExplainer() {
+            qs("#explainConcept").addEventListener("click", () => {
+                const concepto = qs("#conceptInput").value.trim();
+                if (!concepto) {
+                    qs("#explanation").textContent = "Ingresá un concepto para generar la explicación.";
+                    return;
+                }
+                const nivel = qs("#levelSelect").value;
+                api.explainConcept(concepto, nivel).then(texto => {
+                    qs("#explanation").textContent = texto;
+                    incrementMetric("prompts", 1);
+                });
+            });
+        }
+
+        function setupLearningPath() {
+            qs("#pathSelect").addEventListener("change", event => {
+                const value = event.target.value;
+                loadLearningPath(value, true);
+            });
+        }
+
+        function renderChatHistory() {
+            const history = qs("#chatHistory");
+            history.innerHTML = state.historialChat.map(entry => `
+                <div class="message ${entry.role}">${entry.content}</div>
+            `).join("");
+            history.scrollTop = history.scrollHeight;
+        }
+
+        function storeChatHistory() {
+            localStorage.setItem("neuroatlas:chat", JSON.stringify(state.historialChat));
+        }
+
+        function typewriterEffect(element, text, callback) {
+            element.textContent = "";
+            let index = 0;
+            const interval = setInterval(() => {
+                element.textContent += text.charAt(index);
+                index += 1;
+                if (index >= text.length) {
+                    clearInterval(interval);
+                    if (callback) callback();
+                }
+            }, 14);
+        }
+
+        function generateChatResponse(mode, message) {
+            const strategies = {
+                code: `Analicé tu código y, a partir de "${message}", recomiendo separar responsabilidades, agregar pruebas específicas y monitorear métricas clave de performance.`,
+                strategy: `Considerando "${message}", definí un enfoque que combina segmentación de clientes, proyecciones financieras y experimentos rápidos para validar el crecimiento.`,
+                funnel: `Para optimizar el funnel descrito en "${message}", prioricemos instrumentar analytics granular, diseñar pruebas A/B y automatizar seguimientos multicanal.`,
+                ux: `El reto "${message}" se beneficia de investigaciones cualitativas, mapas de empatía y prototipos iterativos medidos con métricas de usabilidad.`,
+                data: `Sobre "${message}", sugiero estructurar un modelo de datos confiable, definir métricas north star y habilitar dashboards accionables para stakeholders.`
+            };
+            return strategies[mode] || strategies.code;
+        }
+
+        function setupChat() {
+            const button = qs("#sendChat");
+            button.addEventListener("click", () => {
+                const message = qs("#chatInput").value.trim();
+                if (!message) return;
+                const mode = qs("#chatMode").value;
+                state.historialChat.push({ role: "user", content: message });
+                renderChatHistory();
+                qs("#chatInput").value = "";
+                incrementMetric("prompts", 1);
+                storeChatHistory();
+                const responseText = generateChatResponse(mode, message);
+                const aiEntry = { role: "ai", content: responseText };
+                state.historialChat.push(aiEntry);
+                storeChatHistory();
+                const history = qs("#chatHistory");
+                const bubble = document.createElement("div");
+                bubble.className = "message ai";
+                history.appendChild(bubble);
+                history.scrollTop = history.scrollHeight;
+                typewriterEffect(bubble, responseText, () => {
+                    history.scrollTop = history.scrollHeight;
+                });
+            });
+        }
+
+        function drawMapConnections(container, nodes) {
+            const canvas = document.createElement("canvas");
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+            container.appendChild(canvas);
+            const ctx = canvas.getContext("2d");
+            ctx.strokeStyle = "rgba(58, 242, 255, 0.2)";
+            ctx.lineWidth = 1.2;
+            nodes.forEach(node => {
+                node.relates.forEach(relId => {
+                    const target = nodes.find(n => n.id === relId);
+                    if (!target) return;
+                    ctx.beginPath();
+                    ctx.moveTo((node.x / 100) * canvas.width, (node.y / 100) * canvas.height);
+                    ctx.lineTo((target.x / 100) * canvas.width, (target.y / 100) * canvas.height);
+                    ctx.stroke();
+                });
+            });
+        }
+
+        function renderKnowledgeMap() {
+            const container = qs("#mapNodes");
+            container.innerHTML = "";
+            const canvasHolder = document.createElement("div");
+            canvasHolder.style.position = "absolute";
+            canvasHolder.style.inset = "0";
+            canvasHolder.style.pointerEvents = "none";
+            container.appendChild(canvasHolder);
+            drawMapConnections(canvasHolder, mapNodes);
+            mapNodes.forEach(node => {
+                const button = document.createElement("button");
+                button.className = "map-node reveal";
+                button.style.left = `${node.x}%`;
+                button.style.top = `${node.y}%`;
+                button.textContent = node.label;
+                button.dataset.id = node.id;
+                container.appendChild(button);
+            });
+            observeReveals();
+        }
+
+        function setupMapInteractions() {
+            const description = qs("#mapDescription");
+            const container = qs("#mapNodes");
+            const updateHighlight = id => {
+                qsa(".map-node", container).forEach(node => {
+                    const data = mapNodes.find(n => n.id === node.dataset.id);
+                    const isActive = node.dataset.id === id || data.relates.includes(id);
+                    node.classList.toggle("related", isActive);
+                    node.style.transform = isActive ? "scale(1.06)" : "scale(1)";
+                });
+                const info = mapNodes.find(n => n.id === id);
+                if (info) description.textContent = info.description;
+            };
+            container.addEventListener("pointerover", event => {
+                const node = event.target.closest(".map-node");
+                if (!node) return;
+                updateHighlight(node.dataset.id);
+            });
+            container.addEventListener("pointerout", () => {
+                qsa(".map-node", container).forEach(node => {
+                    node.classList.remove("related");
+                    node.style.transform = "scale(1)";
+                });
+                description.textContent = "Interactuá con un nodo para ver las sinergias estratégicas.";
+            });
+            container.addEventListener("click", event => {
+                const node = event.target.closest(".map-node");
+                if (!node) return;
+                updateHighlight(node.dataset.id);
+                registerExpertise(node.dataset.id);
+            });
+        }
+
+        function setupNavigation() {
+            qsa("nav a").forEach(link => {
+                link.addEventListener("click", event => {
+                    event.preventDefault();
+                    const target = document.getElementById(link.getAttribute("href").replace("#", ""));
+                    if (target) target.scrollIntoView({ behavior: "smooth" });
+                    history.replaceState(null, "", link.getAttribute("href"));
+                });
+            });
+        }
+
+        function handleHashNavigation() {
+            const { hash } = window.location;
+            if (!hash) return;
+            const target = document.getElementById(hash.replace("#", ""));
+            if (target) {
+                target.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+
+        function observeSections() {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        state.seccionActiva = entry.target.id;
+                        qsa("nav a").forEach(link => {
+                            link.classList.toggle("active", link.dataset.link === state.seccionActiva);
+                        });
+                    }
+                });
+            }, { threshold: 0.55 });
+            qsa("main section").forEach(section => observer.observe(section));
+        }
+
+        function observeReveals() {
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            qsa(".reveal").forEach(element => observer.observe(element));
+        }
+
+        function setupParallax() {
+            const decor = qsa(".parallax-decor span");
+            window.addEventListener("scroll", () => {
+                const offset = window.scrollY;
+                decor.forEach(el => {
+                    const depth = Number(el.dataset.depth || 10);
+                    el.style.transform = `translateY(${offset * depth / 400}px)`;
+                });
+            });
+        }
+
+        function setupHeroCanvas() {
+            const canvas = qs(".hero-canvas");
+            const ctx = canvas.getContext("2d");
+            let particles = [];
+            const resize = () => {
+                canvas.width = canvas.clientWidth;
+                canvas.height = canvas.clientHeight;
+                particles = Array.from({ length: 70 }, () => createParticle(canvas));
+            };
+            window.addEventListener("resize", resize);
+            resize();
+            function createParticle(canvas) {
+                return {
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.6,
+                    vy: (Math.random() - 0.5) * 0.6,
+                    radius: Math.random() * 2 + 1,
+                    hue: Math.random() * 60 + 180
+                };
+            }
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${p.hue}, 90%, 65%, 0.7)`;
+                    ctx.fill();
+                });
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
+        function restoreState() {
+            applyTheme(state.temaActual);
+            renderChatHistory();
+            Object.entries(state.metricas).forEach(([key, value]) => {
+                updateMetric(key, value);
+            });
+        }
+
+        function registerServiceWorker() {
+            if (!("serviceWorker" in navigator)) return;
+            const swCode = `const CACHE='neuroatlas-cache-v1';
+self.addEventListener('install',event=>{
+  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(['./'])));
+});
+self.addEventListener('fetch',event=>{
+  event.respondWith(caches.match(event.request).then(res=>res||fetch(event.request)));
+});`;
+            const blob = new Blob([swCode], { type: "application/javascript" });
+            const url = URL.createObjectURL(blob);
+            navigator.serviceWorker.register(url).finally(() => {
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderKnowledgeCards();
+            populateSelects();
+            renderKnowledgeMap();
+            setupKnowledgeInteractions();
+            setupSearch();
+            setupIdeaGenerator();
+            setupExplainer();
+            setupLearningPath();
+            setupMapInteractions();
+            setupNavigation();
+            handleHashNavigation();
+            observeSections();
+            observeReveals();
+            setupParallax();
+            setupHeroCanvas();
+            setupChat();
+            restoreState();
+            registerServiceWorker();
+            qs(".theme-toggle").addEventListener("click", toggleTheme);
+        });
+    </script>
 </body>
 </html>
