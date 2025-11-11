@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TUSU — Moda Y2K</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="noise-overlay" aria-hidden="true"></div>
+    <header class="hero" id="inicio">
+        <div class="hero__collage" aria-hidden="true">
+            <img src="assets/collage-sticker1.png" alt="Sticker de corazón roto" class="collage-item collage-item--one">
+            <img src="assets/collage-sticker2.png" alt="Sticker de cursor retro" class="collage-item collage-item--two">
+            <img src="assets/collage-sticker3.png" alt="Sticker de estrella" class="collage-item collage-item--three">
+            <img src="assets/collage-sticker4.png" alt="Sticker de ventana retro" class="collage-item collage-item--four">
+        </div>
+        <div class="hero__content">
+            <h1 class="hero__title">TUSU</h1>
+            <p class="hero__subtitle">Moda sin filtro. Humor incorrecto. Caos curado.</p>
+            <p class="hero__tagline" id="rotating-text">Modo terapia OFF</p>
+            <a href="#manifiesto" class="hero__scroll">↓ Seguí bajando</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="section manifiesto" id="manifiesto">
+            <div class="section__inner">
+                <h2 class="section__title">Manifiesto</h2>
+                <p class="manifiesto__text">
+                    <span class="keyword">No hacemos ropa básica.</span><br>
+                    Hacemos remeras para gente que habla como piensa: mal, tarde y con honestidad brutal.<br>
+                    <span class="keyword">TUSU es humor</span>, doble sentido y estética dosmilera.<br>
+                    Si incomoda un poco, <span class="keyword">funciona.</span>
+                </p>
+            </div>
+        </section>
+
+        <section class="section collections" id="colecciones">
+            <div class="section__inner">
+                <h2 class="section__title">Colecciones</h2>
+                <div class="collections__grid">
+                    <article class="collection-card" data-direction="left">
+                        <img src="assets/mockup-socialmente-incorrecta.png" alt="Remera TUSU Socialmente Incorrecta" class="collection-card__image">
+                        <div class="collection-card__content">
+                            <h3>Socialmente Incorrecta</h3>
+                            <p>Modo terapia: cerrado.</p>
+                        </div>
+                    </article>
+                    <article class="collection-card" data-direction="up">
+                        <img src="assets/mockup-identidad-caos.png" alt="Remera TUSU Identidad en Caos" class="collection-card__image">
+                        <div class="collection-card__content">
+                            <h3>Identidad en Caos</h3>
+                            <p>Autodestrucción pero cute.</p>
+                        </div>
+                    </article>
+                    <article class="collection-card" data-direction="right">
+                        <img src="assets/mockup-fiesta-resaca.png" alt="Remera TUSU Fiesta y Resaca" class="collection-card__image">
+                        <div class="collection-card__content">
+                            <h3>Fiesta y Resaca</h3>
+                            <p>Club del insomnio chic.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section games" id="juegos">
+            <div class="section__inner">
+                <h2 class="section__title">Juegos Interactivos TUSU</h2>
+                <p class="section__description">Mazos de cartas en JSON animados para reels, fiestas y previas. Pausá el video y descubrí tu carta.</p>
+                <div class="games__floating-cards" aria-hidden="true">
+                    <div class="floating-card floating-card--one">💿</div>
+                    <div class="floating-card floating-card--two">✨</div>
+                    <div class="floating-card floating-card--three">😈</div>
+                    <div class="floating-card floating-card--four">🧬</div>
+                </div>
+                <pre class="code-block">
+{
+  "mazo": "Fiesta y Resaca",
+  "carta": {
+    "frase": "Tomá agua entre cada trago, reina del caos.",
+    "nivel": "riesgo alto",
+    "acción": "Elegí quién manda la próxima nota de voz vergonzosa."
+  }
+}
+                </pre>
+            </div>
+        </section>
+
+        <section class="section moodboard" id="moodboard">
+            <div class="section__inner">
+                <h2 class="section__title">Moodboard</h2>
+                <div class="moodboard__grid">
+                    <div class="mood-item mood-item--pink">assets/glitter-heart.png</div>
+                    <div class="mood-item mood-item--blue">assets/sad-smiley.png</div>
+                    <div class="mood-item mood-item--white">assets/retro-window.png</div>
+                    <div class="mood-item mood-item--red">assets/fire-flame.png</div>
+                    <div class="mood-item mood-item--pink">assets/tusu-logo-sticker.png</div>
+                    <div class="mood-item mood-item--white">assets/angel-number.png</div>
+                    <div class="mood-item mood-item--blue">assets/pixel-stars.png</div>
+                    <div class="mood-item mood-item--red">assets/gloss-lips.png</div>
+                    <div class="mood-item mood-item--pink">assets/old-browser.png</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section why" id="porque">
+            <div class="section__inner">
+                <h2 class="section__title">Por qué TUSU vende</h2>
+                <ul class="why__list">
+                    <li>Diseños pensados para redes primero.</li>
+                    <li>Estética lista para TikTok, IG Reels y Etsy.</li>
+                    <li>Mensajes provocadores pero inteligentes.</li>
+                    <li>Escalable con IA: más frases, más mazos, más colecciones.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section contact" id="contacto">
+            <div class="section__inner">
+                <h2 class="section__title">¿Querés sumar TUSU a tu tienda o proyecto?</h2>
+                <form class="contact__form">
+                    <div class="form__group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+                    </div>
+                    <div class="form__group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="tu@correo.com" required>
+                    </div>
+                    <div class="form__group">
+                        <label for="mensaje">Mensaje</label>
+                        <textarea id="mensaje" name="mensaje" rows="4" placeholder="Contanos qué idea tenés"></textarea>
+                    </div>
+                    <button type="submit" class="btn">Enviar vibra</button>
+                </form>
+                <div class="contact__socials">
+                    <a href="https://instagram.com" aria-label="Instagram TUSU" class="social-link">
+                        <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm0 2a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H7zm5 3a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6zm6.5-.75a1.25 1.25 0 11-2.5 0 1.25 1.25 0 012.5 0z"/></svg>
+                    </a>
+                    <a href="https://www.tiktok.com" aria-label="TikTok TUSU" class="social-link">
+                        <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><path d="M13.8 3.1c.9.8 2.1 1.4 3.4 1.5V8a6.8 6.8 0 01-3.4-1V15a4.8 4.8 0 11-4-4.7v2.4a2.4 2.4 0 102.1 2.3V3h1.9z"/></svg>
+                    </a>
+                    <a href="https://www.etsy.com" aria-label="Etsy TUSU" class="social-link">
+                        <svg viewBox="0 0 24 24" role="img" aria-hidden="true"><path d="M5 3h14v2h-5v14h5v2H5v-2h5V5H5z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2024 TUSU — Moda sin filtro.</p>
+    </footer>
+</body>
+</html>
