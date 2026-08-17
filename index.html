@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Paleta En Palabras</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="hero">
+        <div class="hero__copy">
+          <p class="eyebrow">Paleta inspirada en productos</p>
+          <h1>Una web simple con colores cálidos, vivos y sus códigos #.</h1>
+          <p>
+            Tarjetas grandes, tipografía redondeada y bloques cromáticos para mostrar una identidad visual alegre y clara.
+          </p>
+          <a class="button" href="#colores">Ver colores</a>
+        </div>
+        <div class="hero__card" aria-label="Muestra de composición visual">
+          <span class="bubble bubble--one"></span>
+          <span class="bubble bubble--two"></span>
+          <span class="bubble bubble--three"></span>
+          <h2>Brand<br />Palette</h2>
+        </div>
+      </section>
+
+      <section id="colores" class="palette" aria-labelledby="palette-title">
+        <div class="section-heading">
+          <p class="eyebrow">Códigos hexadecimales</p>
+          <h2 id="palette-title">Colores principales</h2>
+        </div>
+        <div class="palette-grid">
+          <article class="swatch" style="--color: #F4EADF"><span>Crema base</span><strong>#F4EADF</strong></article>
+          <article class="swatch" style="--color: #7C6BAA"><span>Lavanda profundo</span><strong>#7C6BAA</strong></article>
+          <article class="swatch" style="--color: #87518E"><span>Morado etiqueta</span><strong>#87518E</strong></article>
+          <article class="swatch" style="--color: #347EC2"><span>Azul juego</span><strong>#347EC2</strong></article>
+          <article class="swatch" style="--color: #0AA66F"><span>Verde descubrimiento</span><strong>#0AA66F</strong></article>
+          <article class="swatch" style="--color: #DE7B7A"><span>Coral suave</span><strong>#DE7B7A</strong></article>
+          <article class="swatch" style="--color: #E35A53"><span>Rojo coral</span><strong>#E35A53</strong></article>
+          <article class="swatch" style="--color: #A16B3A"><span>Marrón journal</span><strong>#A16B3A</strong></article>
+          <article class="swatch" style="--color: #6D8F60"><span>Verde salvia</span><strong>#6D8F60</strong></article>
+          <article class="swatch" style="--color: #C99238"><span>Mostaza dorado</span><strong>#C99238</strong></article>
+          <article class="swatch" style="--color: #078896"><span>Turquesa intenso</span><strong>#078896</strong></article>
+          <article class="swatch" style="--color: #579AB5"><span>Azul niebla</span><strong>#579AB5</strong></article>
+        </div>
+      </section>
+
+      <section class="products" aria-label="Tarjetas de ejemplo">
+        <article class="product-card product-card--green">
+          <div class="mock mock--cards"></div>
+          <span class="tag">+30K vendidos</span>
+          <h3>Descubriendo</h3>
+          <p>Descubrir lo que los más chicos piensan y no siempre dicen.</p>
+        </article>
+        <article class="product-card product-card--coral">
+          <div class="mock mock--box"></div>
+          <span class="tag">+60K vendidos</span>
+          <h3>Destapados</h3>
+          <p>Un juego para explorar el deseo y la conversación honesta.</p>
+        </article>
+        <article class="product-card product-card--sage">
+          <div class="mock mock--journal"></div>
+          <span class="tag">Se agota rápido</span>
+          <h3>Journal Productividad</h3>
+          <p>Un cuaderno para planificar y sostener tu ritmo.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
